@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Usage:
+#     setup-tsenv [<DIR>]
+
+# determine dir by arg or current dir
+echo ${1}
+
+# npm
+
+# create files
