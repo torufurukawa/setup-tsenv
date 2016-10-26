@@ -1,11 +1,18 @@
-#!/bin/sh
+#!/bin/bash -eu
 
-# Usage:
-#     setup-tsenv [<DIR>]
+# usage:
+#     setup-tsenv [<directory>]
 
-# determine dir by arg or current dir
-echo ${1}
+# determine target dir by arg or current dir
+TARGET_DIR=$(pwd)
+if [ ${#} -eq 1 ]; then
+  TARGET_DIR=${1}
+fi
 
-# npm
+# move to directory
+cd ${TARGET_DIR}
 
-# create files
+# setup Node environment
+npm install --save-dev typescript gulp gulp-typescript
+
+# setup TypeScript environment
