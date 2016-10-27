@@ -1,4 +1,4 @@
-TEST_DIR = _test
+TEST_DIR = testdir
 
 .PHONY: test
 test:
