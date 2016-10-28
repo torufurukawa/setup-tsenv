@@ -15,15 +15,22 @@ cd ${TARGET_DIR}
 
 # setup Node environment
 npm init -y
-npm install --save-dev typescript gulp gulp-typescript
+npm install --save-dev typescript
+#npm install --save-dev gulp gulp-typescript
 
 # setup TypeScript environment
-# {
-#     "files": [
-#         "src/index.ts"
-#     ],
-#     "compilerOptions": {
-#         "noImplicitAny": true,
-#         "target": "es5"
-#     }
-# }
+cat << EOT >> tsconfig.json
+{
+    "files": ["index.ts"],
+    "filesGlob": ["*.ts"],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es6"
+    }
+}
+EOT
+
+# create blank source
+cat << EOT >> index.ts
+console.log("Hello world!");
+EOT
