@@ -14,14 +14,31 @@ mkdir -p ${TARGET_DIR}
 cd ${TARGET_DIR}
 
 # setup Node environment
-npm init -y
-npm install --save-dev typescript
-#npm install --save-dev gulp gulp-typescript
+cat << EOT >> package.json
+{
+  "name": "hello",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc main.ts",
+    "main": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.0.6"
+  }
+}
+EOT
+
+npm install
 
 # setup TypeScript environment
 cat << EOT >> tsconfig.json
 {
-    "files": ["index.ts"],
+    "files": ["main.ts"],
     "filesGlob": ["*.ts"],
     "compilerOptions": {
         "noImplicitAny": true,
@@ -31,6 +48,6 @@ cat << EOT >> tsconfig.json
 EOT
 
 # create blank source
-cat << EOT >> index.ts
+cat << EOT >> main.ts
 console.log("Hello world!");
 EOT
