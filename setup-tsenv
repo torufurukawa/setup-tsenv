@@ -21,13 +21,16 @@ cat << EOT >> package.json
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "tsc main.ts",
-    "main": "node main.js"
+    "build": "gulp build",
+    "main": "node main.js",
+    "watch": "gulp watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.1.2",
     "typescript": "^2.0.6"
   }
 }
@@ -50,4 +53,25 @@ EOT
 # create blank source
 cat << EOT >> main.ts
 console.log("Hello world!");
+EOT
+
+
+# gulp
+cat << EOT >> gulpfile.js
+var gulp = require('gulp');
+var typescript = require('gulp-typescript');
+
+gulp.task('build', function() {
+  var options = {out: 'main.js'};
+  gulp.src([
+    './*.ts',
+    '!./node_modules/**'
+  ])
+  .pipe(typescript(options))
+  .pipe(gulp.dest('./'));
+});
+
+gulp.task('watch', function(){
+  gulp.watch('./*.js', ['build']);
+});
 EOT
