@@ -22,7 +22,7 @@ cat << EOT >> package.json
   "main": "main.js",
   "scripts": {
     "build": "gulp build",
-    "main": "node main.js",
+    "main": "gulp main",
     "watch": "gulp watch"
   },
   "keywords": [],
@@ -30,6 +30,7 @@ cat << EOT >> package.json
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-exec": "^2.1.2",
     "gulp-typescript": "^3.1.2",
     "typescript": "^2.0.6"
   }
@@ -60,6 +61,7 @@ EOT
 cat << EOT >> gulpfile.js
 var gulp = require('gulp');
 var typescript = require('gulp-typescript');
+var exec = require('gulp-exec');
 
 gulp.task('build', function() {
   var options = {out: 'main.js'};
@@ -71,7 +73,15 @@ gulp.task('build', function() {
   .pipe(gulp.dest('./'));
 });
 
+gulp.task('main', function(callback) {
+  exec('node main.js', function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    callback(err);
+  });
+});
+
 gulp.task('watch', function(){
-  gulp.watch('./*.js', ['build']);
+  gulp.watch('./*.js', ['build', 'main']);
 });
 EOT
